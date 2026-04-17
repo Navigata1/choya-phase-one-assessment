@@ -75,9 +75,10 @@
     }
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.35fr 0.95fr;
+      grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.8fr);
       gap: 22px;
       margin-top: 30px;
+      align-items: stretch;
     }
     .card {
       background: var(--panel);
@@ -87,19 +88,58 @@
       backdrop-filter: blur(18px);
     }
     .hero-card { padding: 28px; }
+    .hero-summary-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .signals-card {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)),
+        rgba(15, 23, 42, 0.82);
+    }
+    .signals-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(104,224,207,0.12), transparent 34%);
+      pointer-events: none;
+    }
     .hero-card h3, .section h2, .subsection h3 { margin-top: 0; }
     .meta-list, .bullet-list { margin: 0; padding-left: 18px; }
     .meta-list li, .bullet-list li { margin: 8px 0; color: var(--muted); }
+    .signals-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+    .signals-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
     .stats {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
+      position: relative;
+      z-index: 1;
     }
     .stat {
-      padding: 20px;
+      padding: 18px;
       border-radius: 18px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      min-height: 118px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .stat .label {
       color: var(--muted);
@@ -109,8 +149,10 @@
       margin-bottom: 8px;
     }
     .stat .value {
-      font-size: 1.2rem;
+      font-size: 1.08rem;
+      line-height: 1.25;
       font-weight: 700;
+      letter-spacing: -0.02em;
     }
     .section {
       margin: 26px 0;
@@ -190,12 +232,15 @@
     }
     @media (max-width: 920px) {
       .hero-grid, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .hero-grid { gap: 18px; }
       .stats { grid-template-columns: 1fr 1fr; }
     }
     @media (max-width: 640px) {
       .hero { padding-top: 68px; }
       .hero-card, .section { padding: 22px; }
+      .signals-head { display: block; margin-bottom: 14px; }
       .stats { grid-template-columns: 1fr; }
+      .stat { min-height: unset; }
       .step { grid-template-columns: 1fr; }
     }
   </style>
@@ -210,7 +255,7 @@
       </p>
 
       <div class="hero-grid">
-        <div class="card hero-card">
+        <div class="card hero-card hero-summary-card">
           <h3>Executive Summary</h3>
           <p>
             The core opportunity is not only choosing a CRM. The larger issue is creating a cleaner revenue workflow around lead response, tracking, visibility, and operational follow-through.
@@ -227,8 +272,13 @@
           </div>
         </div>
 
-        <div class="card hero-card">
-          <h3>Assessment Signals</h3>
+        <div class="card hero-card signals-card">
+          <div class="signals-head">
+            <div>
+              <h3>Assessment Signals</h3>
+              <p>A quick read on the practical Phase 1 direction.</p>
+            </div>
+          </div>
           <div class="stats">
             <div class="stat">
               <div class="label">Primary Focus</div>

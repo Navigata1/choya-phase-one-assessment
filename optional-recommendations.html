@@ -4,34 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Optional Recommendations by Priority | Choya Wise</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #09101d;
-      --panel: rgba(15, 23, 42, 0.72);
-      --panel-strong: rgba(15, 23, 42, 0.92);
-      --text: #e6edf8;
-      --muted: #9fb0c9;
-      --line: rgba(148, 163, 184, 0.16);
-      --accent: #68e0cf;
-      --accent-2: #8b5cf6;
-      --gold: #f2c879;
+      --bg: #09110e;
+      --panel: rgba(15, 18, 22, 0.90);
+      --panel-strong: rgba(18, 22, 26, 0.97);
+      --text: #eef8f1;
+      --muted: #a8b8b0;
+      --line: rgba(25, 71, 52, 0.12);
+      --accent: #4f8396;
+      --accent-2: #a7c8d4;
+      --gold: #3e7182;
+      --good: #a7c8d4;
+      --shadow: 0 28px 100px rgba(0, 0, 0, 0.42);
       --radius: 24px;
-      --shadow: 0 20px 80px rgba(0,0,0,0.35);
       --max: 1160px;
     }
     * { box-sizing: border-box; }
+    html { scroll-behavior: auto; }
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: 'Noto Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(104,224,207,0.14), transparent 25%),
-        radial-gradient(circle at top right, rgba(139,92,246,0.16), transparent 30%),
-        linear-gradient(180deg, #07101d 0%, #0a1324 40%, #09111f 100%);
+        radial-gradient(circle at top left, rgba(143, 224, 189, 0.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(46, 122, 91, 0.12), transparent 30%),
+        linear-gradient(180deg, #0b1110 0%, #101816 35%, #0d1412 100%);
       line-height: 1.6;
     }
+    a { color: inherit; }
     .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
-    .hero { padding: 76px 0 28px; }
+    .hero { padding: 88px 0 28px; }
     .eyebrow {
       display: inline-block;
       padding: 10px 14px;
@@ -41,8 +47,8 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--accent);
-      background: rgba(104,224,207,0.08);
-      border: 1px solid rgba(104,224,207,0.24);
+      background: rgba(31, 90, 67, 0.08);
+      border: 1px solid rgba(31, 90, 67, 0.18);
     }
     h1 {
       margin: 16px 0 12px;
@@ -50,6 +56,7 @@
       line-height: 1.05;
       letter-spacing: -0.04em;
       max-width: 950px;
+      font-family: 'Figtree', sans-serif;
     }
     .lead { color: var(--muted); max-width: 880px; font-size: 1.06rem; }
     .top-links {
@@ -61,18 +68,23 @@
     .top-links a {
       text-decoration: none;
       color: var(--text);
-      padding: 12px 16px;
+      padding: 11px 15px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(21, 25, 29, 0.96);
+      border: 1px solid rgba(114, 240, 177, 0.18);
+      transition: background 180ms ease, border-color 180ms ease;
+    }
+    .top-links a:hover {
+      background: rgba(114, 240, 177, 0.10);
+      border-color: rgba(114, 240, 177, 0.28);
     }
     .section {
       margin: 26px 0;
       padding: 28px;
-      background: var(--panel);
-      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(18,22,26,0.98), rgba(12,15,18,0.98));
+      border: 1px solid rgba(114, 240, 177, 0.18);
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      box-shadow: 0 0 0 1px rgba(114,240,177,0.03), 0 0 36px rgba(114,240,177,0.08), var(--shadow);
       backdrop-filter: blur(18px);
     }
     .section h2 {
@@ -81,15 +93,58 @@
       letter-spacing: -0.03em;
     }
     .section p { color: var(--muted); }
+
+    /* CRM Doc Links Section */
+    .doc-links {
+      display: grid;
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .doc-link-card {
+      padding: 20px 22px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(18,22,26,0.98), rgba(12,15,18,0.98));
+      border: 1px solid rgba(114, 240, 177, 0.18);
+      box-shadow: 0 0 0 1px rgba(114,240,177,0.03), 0 0 30px rgba(114,240,177,0.07);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .doc-link-card a {
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+    .doc-link-card a:hover {
+      color: #b8f0cc;
+    }
+    .doc-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(114,240,177,0.14), rgba(61,184,129,0.20));
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .doc-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
     .priority-grid {
       display: grid;
       gap: 18px;
       margin-top: 20px;
     }
     .priority-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(18,22,26,0.98), rgba(12,15,18,0.98));
+      border: 1px solid rgba(114, 240, 177, 0.18);
       border-radius: 22px;
+      box-shadow: 0 0 0 1px rgba(114,240,177,0.03), 0 0 30px rgba(114,240,177,0.07);
       overflow: hidden;
       position: relative;
     }
@@ -97,7 +152,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at top right, rgba(104,224,207,0.12), transparent 26%);
+      background: radial-gradient(circle at top right, rgba(114, 240, 177, 0.14), transparent 38%);
       pointer-events: none;
       opacity: 0.9;
     }
@@ -124,7 +179,7 @@
     .priority-head span { color: var(--muted); }
     .chev {
       font-size: 1.2rem;
-      color: var(--gold);
+      color: #b8f0cc;
       transition: transform 220ms ease;
     }
     .priority-card.open .chev { transform: rotate(180deg); }
@@ -143,9 +198,9 @@
     .option {
       padding: 18px;
       border-radius: 18px;
-      background: rgba(15, 23, 42, 0.56);
-      border: 1px solid rgba(255,255,255,0.08);
-      backdrop-filter: blur(18px);
+      background: linear-gradient(180deg, rgba(18,22,26,0.98), rgba(12,15,18,0.98));
+      border: 1px solid rgba(114, 240, 177, 0.18);
+      box-shadow: 0 0 0 1px rgba(114,240,177,0.03), 0 0 28px rgba(114,240,177,0.06);
     }
     .option h4 { margin: 0 0 8px; font-size: 1rem; }
     .option p { margin: 0; color: var(--muted); }
@@ -166,7 +221,7 @@
       <span class="eyebrow">Optional Recommendations</span>
       <h1>Broader Recommendations by Priority</h1>
       <p class="lead">
-        This page expands the broader assessment landscape beyond the immediate CRM decision and shows how multiple business surfaces may contribute to Choya’s bottom line through better lead flow, stronger conversion, clearer positioning, and smarter operational support.
+        This page expands the broader assessment landscape beyond the immediate CRM decision and shows how multiple business surfaces may contribute to Choya's bottom line through better lead flow, stronger conversion, clearer positioning, and smarter operational support.
       </p>
       <div class="top-links">
         <a href="./index.html">← Return to Main Assessment</a>
@@ -180,6 +235,22 @@
       <p>
         These are optional recommendations by business priority, not mandatory next steps. The purpose is to show visible opportunity surfaces, preserve strategic flexibility, and give Choya practical choices based on what matters most right now.
       </p>
+    </section>
+
+    <section class="section">
+      <h2>CRM Mock-Up & Improvements — Choya's Document</h2>
+      <p>
+        Choya referenced the following Google Doc outlining CRM mock-ups and improvement ideas for review during our next conversation:
+      </p>
+      <div class="doc-links">
+        <div class="doc-link-card">
+          <div class="doc-icon">📄</div>
+          <div>
+            <a href="https://docs.google.com/document/d/18HGNPe8ByLuHYj-VBl4Y7CfkWcMAXPmj2-5JxjMuG38/edit" target="_blank" rel="noreferrer">CRM Mock-Up & Improvements</a>
+            <div class="doc-desc">Choya's CRM mock-up and improvement ideas — for review and future planning</div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="section">
@@ -282,7 +353,7 @@
             <div class="option-stack">
               <div class="option"><h4>Option A — Stay Platform-Centered</h4><p>If the chosen CRM path works well enough, continue improving inside that ecosystem.</p></div>
               <div class="option"><h4>Option B — Layer Enhancements on Top</h4><p>If the platform works but needs help, build supporting layers instead of replacing everything.</p></div>
-              <div class="option"><h4>Option C — Design a Tailored System</h4><p>If the business clearly outgrows the platform route, move toward a system designed around Choya’s actual workflow and business model.</p></div>
+              <div class="option"><h4>Option C — Design a Tailored System</h4><p>If the business clearly outgrows the platform route, move toward a system designed around Choya's actual workflow and business model.</p></div>
             </div>
           </div>
         </div>

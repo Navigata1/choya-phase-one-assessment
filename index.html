@@ -65,6 +65,24 @@
       padding: 88px 0 42px;
       position: relative;
       overflow: hidden;
+      text-align: center;
+    }
+    .hero .eyebrow {
+      margin: 0 auto;
+    }
+    .hero h1 {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero p.lead {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero .utility-nav {
+      justify-content: center;
+    }
+    .hero .hero-grid {
+      text-align: left;
     }
     .utility-nav {
       display: flex;
@@ -97,7 +115,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0.04), transparent 45%);
+      background: radial-gradient(circle at top center, rgba(114,240,177,0.06), transparent 50%);
       pointer-events: none;
     }
     .eyebrow {
@@ -650,7 +668,7 @@
           <a href="https://www.linkedin.com/in/jonathanisaac-idc/" target="_blank" rel="noreferrer">LinkedIn</a>
           <a href="https://x.com/Islanddevcrew" target="_blank" rel="noreferrer">X</a>
           <a href="#">Terms / Service Agreement</a>
-          <a href="#">Payment / Stripe</a>
+          <a href="#" id="pay-now-btn" style="display:inline-block;padding:14px 28px;border-radius:999px;background:linear-gradient(135deg,#4f8b6d,#2e7a5b);color:#fff;font-weight:700;text-decoration:none;border:1px solid rgba(114,240,177,0.18);cursor:pointer;font-size:1rem;">Begin Engagement — $750</a>
         </div>
       </div>
     </div>
@@ -674,26 +692,27 @@
       }, 560);
     }
 
+    function easeOutSpring(t) {
+      const c = 1.70158;
+      const p = t - 1;
+      return 1 + (p * p * ((c + 1) * p + c));
+    }
+
     function smoothScrollTo(targetY, duration = 900) {
       const startY = window.scrollY;
       const diff = targetY - startY;
       const start = performance.now();
-      document.body.classList.add('is-scrolling');
-      function easeOutSpring(t) {
-        const c = 1.70158;
-        const p = t - 1;
-        return 1 + (p * p * ((c + 1) * p + c));
-      }
       function frame(now) {
         const elapsed = now - start;
         const t = Math.min(elapsed / duration, 1);
         const eased = easeOutSpring(t);
         window.scrollTo(0, startY + diff * eased);
         if (t < 1) requestAnimationFrame(frame);
-        else document.body.classList.remove('is-scrolling');
       }
       requestAnimationFrame(frame);
     }
+
+    document.body.style.scrollBehavior = 'auto';
 
     fadeLinks.forEach(link => {
       link.addEventListener('click', (e) => {

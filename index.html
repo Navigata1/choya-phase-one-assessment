@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Phase 1 Revenue Workflow + CRM Readiness Assessment | Choya Wise</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: rgba(15, 23, 42, 0.72);
+      --panel-strong: rgba(15, 23, 42, 0.9);
+      --text: #e5ecf6;
+      --muted: #9fb0c9;
+      --line: rgba(148, 163, 184, 0.18);
+      --accent: #68e0cf;
+      --accent-2: #8b5cf6;
+      --gold: #f2c879;
+      --good: #7dd3fc;
+      --shadow: 0 20px 80px rgba(0, 0, 0, 0.38);
+      --radius: 24px;
+      --max: 1120px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(104, 224, 207, 0.16), transparent 28%),
+        radial-gradient(circle at top right, rgba(139, 92, 246, 0.16), transparent 30%),
+        linear-gradient(180deg, #08101f 0%, #0b1020 35%, #0a1222 100%);
+      line-height: 1.6;
+    }
+    a { color: inherit; }
+    .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+    .hero {
+      padding: 88px 0 42px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent 45%);
+      pointer-events: none;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid rgba(104, 224, 207, 0.24);
+      border-radius: 999px;
+      color: var(--accent);
+      background: rgba(104, 224, 207, 0.08);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 18px 0 16px;
+      font-size: clamp(2.3rem, 5vw, 4.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      max-width: 980px;
+    }
+    .hero p.lead {
+      margin: 0;
+      max-width: 900px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.22rem);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.95fr;
+      gap: 22px;
+      margin-top: 30px;
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+    .hero-card { padding: 28px; }
+    .hero-card h3, .section h2, .subsection h3 { margin-top: 0; }
+    .meta-list, .bullet-list { margin: 0; padding-left: 18px; }
+    .meta-list li, .bullet-list li { margin: 8px 0; color: var(--muted); }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .stat {
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .stat .label {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+      margin-bottom: 8px;
+    }
+    .stat .value {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    .section {
+      margin: 26px 0;
+      padding: 30px;
+    }
+    .section h2 {
+      font-size: clamp(1.4rem, 2.4vw, 2rem);
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+    .section p { color: var(--muted); }
+    .grid-2, .grid-3 {
+      display: grid;
+      gap: 18px;
+    }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .subsection {
+      padding: 22px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .subsection h3 {
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+    }
+    .subsection p { margin: 0 0 10px; }
+    .tag {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 10px;
+      background: rgba(125, 211, 252, 0.1);
+      color: var(--good);
+      border: 1px solid rgba(125, 211, 252, 0.2);
+    }
+    .callout {
+      padding: 22px 24px;
+      border-left: 4px solid var(--gold);
+      background: rgba(242, 200, 121, 0.08);
+      color: var(--text);
+      border-radius: 16px;
+      margin-top: 18px;
+    }
+    .steps {
+      display: grid;
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .step .num {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      background: linear-gradient(135deg, rgba(104,224,207,0.22), rgba(139,92,246,0.22));
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .footer {
+      padding: 28px 0 60px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    @media (max-width: 920px) {
+      .hero-grid, .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .hero { padding-top: 68px; }
+      .hero-card, .section { padding: 22px; }
+      .stats { grid-template-columns: 1fr; }
+      .step { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Phase 1 Assessment · Choya Wise</span>
+      <h1>Revenue Workflow + CRM Readiness Assessment</h1>
+      <p class="lead">
+        A bounded, revenue-first, compliance-conscious assessment designed to identify the most practical first move for improving lead handling, workflow visibility, and operational follow-through without overbuilding too early.
+      </p>
+
+      <div class="hero-grid">
+        <div class="card hero-card">
+          <h3>Executive Summary</h3>
+          <p>
+            The core opportunity is not only choosing a CRM. The larger issue is creating a cleaner revenue workflow around lead response, tracking, visibility, and operational follow-through.
+          </p>
+          <ul class="meta-list">
+            <li>Improve missed-call and form follow-up visibility</li>
+            <li>Reduce lead leakage and response delays</li>
+            <li>Create clearer dashboard awareness</li>
+            <li>Reduce manual reporting burden where possible</li>
+            <li>Select the most practical HIPAA-conscious operating path before a larger build</li>
+          </ul>
+          <div class="callout">
+            <strong>Recommendation:</strong> Move forward with a bounded <strong>Phase 1 Revenue Workflow + CRM Readiness initiative</strong>, with a Zoho-centered or compliant-hybrid path as the most practical near-term direction.
+          </div>
+        </div>
+
+        <div class="card hero-card">
+          <h3>Assessment Signals</h3>
+          <div class="stats">
+            <div class="stat">
+              <div class="label">Primary Focus</div>
+              <div class="value">Revenue workflow first</div>
+            </div>
+            <div class="stat">
+              <div class="label">Immediate Risk</div>
+              <div class="value">Lead leakage</div>
+            </div>
+            <div class="stat">
+              <div class="label">Key Constraint</div>
+              <div class="value">HIPAA fit</div>
+            </div>
+            <div class="stat">
+              <div class="label">Best Phase 1 Path</div>
+              <div class="value">Zoho or hybrid</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card section">
+      <h2>What We Heard From the Business</h2>
+      <div class="grid-2">
+        <div class="subsection">
+          <h3>Revenue and conversions matter most right now</h3>
+          <p>The current priority is not adding complexity for complexity’s sake. The priority is increasing revenue by improving how inbound opportunities are captured, routed, and followed up on.</p>
+        </div>
+        <div class="subsection">
+          <h3>There is active lead leakage</h3>
+          <p>Calls are missed, forms can arrive without clean routing or visibility, and follow-up activity is not yet centralized enough for confident supervision.</p>
+          <span class="tag">Repeated need: visibility within ~10 minutes</span>
+        </div>
+        <div class="subsection">
+          <h3>Manual tracking is creating drag</h3>
+          <p>Current processes still rely too heavily on spreadsheets, manual review, and human memory, which creates stress and inconsistency.</p>
+        </div>
+        <div class="subsection">
+          <h3>Reporting burden is real</h3>
+          <p>The supervisee reporting workflow appears workable in pieces, but it still depends on repetitive human effort, multiple sheets, and manual signature handling.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section">
+      <h2>Broader Business Surface</h2>
+      <p>
+        Public-facing business surfaces show that this is not just a single-offer business. Choya is operating across multiple trust and revenue layers already.
+      </p>
+      <div class="grid-3">
+        <div class="subsection">
+          <h3>Aspire Counseling</h3>
+          <p>Clinical supervision, private-practice authority, transformation-based positioning, and statewide supervision messaging.</p>
+        </div>
+        <div class="subsection">
+          <h3>Supervisor Training / Education</h3>
+          <p>Structured training, CEU-style education, templates, and support-based offers indicate an education and professional development surface beyond therapy.</p>
+        </div>
+        <div class="subsection">
+          <h3>Audience / Trust Surface</h3>
+          <p>Professional authority, testimonials, community language, and training/support positioning suggest real demand-side strength that should be supported operationally.</p>
+        </div>
+      </div>
+      <div class="callout">
+        <strong>Meaning:</strong> the chosen system path should support not just one isolated workflow, but a business spanning service delivery, training, education, and lead capture across multiple entry points.
+      </div>
+    </section>
+
+    <section class="card section">
+      <h2>The Three Most Important Decision Surfaces</h2>
+      <div class="grid-3">
+        <div class="subsection">
+          <h3>1. Lead Intake, Missed Calls, and Follow-Up</h3>
+          <p>The most directly revenue-linked area. When a call is missed or a form comes in, who knows, how quickly, and what happens next?</p>
+          <span class="tag">Revenue implication: High</span>
+        </div>
+        <div class="subsection">
+          <h3>2. Internal Visibility and Dashboard Awareness</h3>
+          <p>The business needs a cleaner operational hub showing what came in, what was handled, what still needs action, and where activity is slipping.</p>
+          <span class="tag">Revenue implication: High</span>
+        </div>
+        <div class="subsection">
+          <h3>3. Supervisee Reporting and Documentation Burden</h3>
+          <p>Monthly reporting and signature workflows matter, but likely as a second-wave operational win after front-end leakage is better controlled.</p>
+          <span class="tag">Revenue implication: Moderate to High</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section">
+      <h2>CRM Decision: Three Practical Paths</h2>
+      <p>
+        The CRM question should be treated as a workflow-fit decision, not just a software preference decision.
+      </p>
+      <div class="grid-3">
+        <div class="subsection">
+          <h3>Surface A: Select what already exists</h3>
+          <p>Choose the most practical current platform and configure it properly around the real workflow.</p>
+          <ul class="bullet-list">
+            <li>Likely best example: Zoho</li>
+            <li>Lower cost, lower friction</li>
+            <li>Best for speed and control</li>
+          </ul>
+        </div>
+        <div class="subsection">
+          <h3>Surface B: Build on top of an existing CRM</h3>
+          <p>Use an existing platform as the compliant base, then add workflow-specific improvements alongside it.</p>
+          <ul class="bullet-list">
+            <li>Preserves platform familiarity</li>
+            <li>Solves clunky or limited areas</li>
+            <li>Strong hybrid option</li>
+          </ul>
+        </div>
+        <div class="subsection">
+          <h3>Surface C: Design a business-specific system</h3>
+          <p>Map the exact business rules, dashboards, and action logic around how Choya actually operates.</p>
+          <ul class="bullet-list">
+            <li>Most customized</li>
+            <li>Most ambitious</li>
+            <li>Not recommended as the first move</li>
+          </ul>
+        </div>
+      </div>
+      <div class="callout">
+        <strong>Phase 1 Position:</strong> Start with the workflow and compliance realities first, then select the path that best supports those realities. The most practical near-term direction is a <strong>Zoho-centered setup or compliant hybrid workflow</strong>.
+      </div>
+    </section>
+
+    <section class="card section">
+      <h2>HIPAA and Platform Considerations</h2>
+      <p>
+        The first phase should not be designed around pushing sensitive workflows into tools that are not clearly aligned with the compliance requirements of the business.
+      </p>
+      <div class="grid-2">
+        <div class="subsection">
+          <h3>What matters</h3>
+          <ul class="bullet-list">
+            <li>Understanding what data needs to be captured</li>
+            <li>Separating operationally useful data from legally sensitive data</li>
+            <li>Making communication and storage patterns intentional</li>
+            <li>Avoiding assumptions that “popular” equals “safe”</li>
+          </ul>
+        </div>
+        <div class="subsection">
+          <h3>Why this matters for Phase 1</h3>
+          <p>This is one of the strongest arguments for a more measured Zoho-first or compliant-hybrid approach instead of forcing a platform that looks better but may fit the constraints worse.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section">
+      <h2>Recommended 30-Day Action Path</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="num">1</div>
+          <div>
+            <h3>Week 1: Clarify and map</h3>
+            <p>Confirm lead sources, missed-call handling, form submission paths, dashboard requirements, and which data must stay inside compliant boundaries.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <div>
+            <h3>Week 2: Stand up the operational structure</h3>
+            <p>Configure or prototype the initial workflow path, basic dashboard visibility, owner-based follow-up handling, and first response-status structure.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <div>
+            <h3>Week 3: Validate usage and friction</h3>
+            <p>Observe what the team actually uses, identify clunky points, and measure whether visibility and response speed improved.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="num">4</div>
+          <div>
+            <h3>Week 4: Refine and decide the next move</h3>
+            <p>Decide whether to deepen the platform configuration, add a supporting custom layer, or justify a later broader system build.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card section">
+      <h2>Final Recommendation</h2>
+      <p>
+        Do not overbuild. Do not overpromise. Do not chase every opportunity at once.
+      </p>
+      <p>
+        The strongest move now is a bounded Phase 1 that improves response speed, visibility, accountability, and workflow fit, then makes the CRM decision in a way that supports how the business actually operates.
+      </p>
+      <div class="callout">
+        <strong>Bottom line:</strong> move forward with a <strong>Phase 1 Revenue Workflow + CRM Readiness initiative</strong>, using Zoho or a compliant-hybrid path as the most practical first direction, while preserving the option for deeper custom work later if Phase 1 proves it is warranted.
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    Prepared for review and refinement. This assessment is intentionally focused on Phase 1 decision-making and not full implementation of every opportunity discussed.
+  </footer>
+</body>
+</html>

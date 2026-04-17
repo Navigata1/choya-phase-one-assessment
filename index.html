@@ -21,7 +21,7 @@
       --max: 1120px;
     }
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: auto; }
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -34,6 +34,29 @@
     }
     a { color: inherit; }
     .wrap { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(18px);
+      background: rgba(7, 12, 24, 0.74);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .topbar-inner {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 0;
+    }
+    .topbar-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+    }
     .hero {
       padding: 88px 0 42px;
       position: relative;
@@ -45,7 +68,7 @@
       gap: 10px;
       margin-top: 22px;
     }
-    .utility-nav a {
+    .utility-nav a, .topbar-nav a {
       text-decoration: none;
       color: var(--text);
       padding: 11px 15px;
@@ -53,6 +76,18 @@
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.08);
       font-size: 0.95rem;
+      transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+    .utility-nav a:hover, .topbar-nav a:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(104,224,207,0.28);
+      transform: translateY(-1px);
+    }
+    .topbar-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 8px;
     }
     .hero::after {
       content: "";
@@ -275,10 +310,26 @@
       text-decoration: none;
       border-bottom: 1px solid rgba(255,255,255,0.16);
     }
+    .fade-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 320ms ease;
+      z-index: 2000;
+    }
+    .fade-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
     @media (max-width: 920px) {
       .hero-grid, .grid-2, .grid-3 { grid-template-columns: 1fr; }
       .hero-grid { gap: 18px; }
       .stats { grid-template-columns: 1fr 1fr; }
+      .topbar-inner { display: block; }
+      .topbar-title { margin-bottom: 10px; }
+      .topbar-nav { justify-content: flex-start; }
     }
     @media (max-width: 640px) {
       .hero { padding-top: 68px; }
@@ -292,6 +343,22 @@
   </style>
 </head>
 <body>
+  <div class="fade-overlay" aria-hidden="true"></div>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-title">Choya Wise · Phase 1 Assessment</div>
+      <nav class="topbar-nav" aria-label="Persistent section navigation">
+        <a href="#what-we-heard" data-fade-nav>Heard</a>
+        <a href="#business-surface" data-fade-nav>Surface</a>
+        <a href="#decision-surfaces" data-fade-nav>Decisions</a>
+        <a href="#crm-paths" data-fade-nav>CRM</a>
+        <a href="#action-path" data-fade-nav>30 Days</a>
+        <a href="#priority-1" data-fade-nav>Priority 1</a>
+        <a href="#next-steps" data-fade-nav>Next</a>
+        <a href="./optional-recommendations.html">Optional</a>
+      </nav>
+    </div>
+  </div>
   <header class="hero">
     <div class="wrap">
       <span class="eyebrow">Phase 1 Assessment · Choya Wise</span>
@@ -300,14 +367,14 @@
         A bounded, revenue-first, compliance-conscious assessment designed to identify the most practical first move for improving lead handling, workflow visibility, and operational follow-through without overbuilding too early.
       </p>
       <nav class="utility-nav" aria-label="Assessment sections">
-        <a href="#what-we-heard">What We Heard</a>
-        <a href="#business-surface">Business Surface</a>
-        <a href="#decision-surfaces">Decision Surfaces</a>
-        <a href="#crm-paths">CRM Paths</a>
-        <a href="#action-path">30-Day Path</a>
-        <a href="#priority-1">Priority 1</a>
+        <a href="#what-we-heard" data-fade-nav>What We Heard</a>
+        <a href="#business-surface" data-fade-nav>Business Surface</a>
+        <a href="#decision-surfaces" data-fade-nav>Decision Surfaces</a>
+        <a href="#crm-paths" data-fade-nav>CRM Paths</a>
+        <a href="#action-path" data-fade-nav>30-Day Path</a>
+        <a href="#priority-1" data-fade-nav>Priority 1</a>
         <a href="./optional-recommendations.html">Optional Recommendations</a>
-        <a href="#next-steps">Next Steps</a>
+        <a href="#next-steps" data-fade-nav>Next Steps</a>
       </nav>
 
       <div class="hero-grid">
@@ -580,15 +647,44 @@
         <strong>Designed by Island Development Crew</strong>
         <div>Jon Isaac · Strategic AI Systems, Workflow Design, and Business Infrastructure</div>
         <div class="footer-links">
-          <a href="mailto:Jony02@hotmail.com">Jony02@hotmail.com</a>
+          <a href="mailto:jon-isaac@islanddevcrew.com">jon-isaac@islanddevcrew.com</a>
           <a href="https://jonisaac.cv" target="_blank" rel="noreferrer">JonIsaac.cv</a>
           <a href="https://www.linkedin.com" target="_blank" rel="noreferrer">LinkedIn</a>
-          <a href="https://x.com" target="_blank" rel="noreferrer">X</a>
+          <a href="https://x.com/Islanddevcrew" target="_blank" rel="noreferrer">@Islanddevcrew</a>
           <a href="#">Terms / Service Agreement</a>
           <a href="#">Payment / Stripe</a>
         </div>
       </div>
     </div>
   </footer>
+  <script>
+    const overlay = document.querySelector('.fade-overlay');
+    const topbar = document.querySelector('.topbar');
+    const fadeLinks = document.querySelectorAll('[data-fade-nav]');
+
+    function goToSection(hash) {
+      const target = document.querySelector(hash);
+      if (!target) return;
+      const topbarOffset = topbar ? topbar.offsetHeight + 18 : 0;
+      overlay.classList.add('active');
+      setTimeout(() => {
+        const y = target.getBoundingClientRect().top + window.scrollY - topbarOffset;
+        window.scrollTo({ top: y, behavior: 'auto' });
+      }, 220);
+      setTimeout(() => {
+        overlay.classList.remove('active');
+      }, 520);
+    }
+
+    fadeLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        const hash = link.getAttribute('href');
+        if (!hash || !hash.startsWith('#')) return;
+        e.preventDefault();
+        history.replaceState(null, '', hash);
+        goToSection(hash);
+      });
+    });
+  </script>
 </body>
 </html>
